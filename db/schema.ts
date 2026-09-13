@@ -1,0 +1,4 @@
+import {sqliteTable,text,integer} from 'drizzle-orm/sqlite-core';
+export const users=sqliteTable('users',{id:text('id').primaryKey(),username:text('username').notNull().unique(),name:text('name').notNull(),role:text('role').notNull(),password:text('password').notNull(),permissions:text('permissions').notNull(),branches:text('branches').notNull(),active:integer('active').notNull().default(1),failures:integer('failures').notNull().default(0),lockedUntil:integer('locked_until').notNull().default(0)});
+export const sessions=sqliteTable('sessions',{id:text('id').primaryKey(),userId:text('user_id').notNull().references(()=>users.id),expires:integer('expires').notNull()});
+export const workspace=sqliteTable('workspace',{id:integer('id').primaryKey(),version:integer('version').notNull(),data:text('data').notNull()});

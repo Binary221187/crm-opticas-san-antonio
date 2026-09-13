@@ -1,0 +1,16 @@
+{
+  "name": "Ópticas San Antonio · CRM",
+  "short_name": "Ópticas SA",
+  "description": "Agenda, pacientes, ventas e inventario de Ópticas San Antonio.",
+  "id": "/",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone"],
+  "background_color": "#edf5f6",
+  "theme_color": "#086b60",
+  "orientation": "any",
+  "icons": [
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
