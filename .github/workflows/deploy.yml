@@ -23,8 +23,8 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Build (direct vinext)
-        run: node node_modules/vinext/dist/cli.js build
+      - name: Build with CI script
+        run: node scripts/ci-build.mjs
 
       - name: Verify build output
         run: ls -la dist/server/wrangler.json
