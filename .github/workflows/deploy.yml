@@ -23,8 +23,30 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - name: Setup build environment
+        run: |
+          mkdir -p .sites-runtime/home .sites-runtime/npm-cache .sites-runtime/xdg-config .sites-runtime/tmp .sites-runtime/wrangler/logs
+          export SITES_ENV_READY=1
+          export SITES_PROJECT_ROOT=$(pwd)
+          export HOME=$(pwd)/.sites-runtime/home
+          export XDG_CONFIG_HOME=$(pwd)/.sites-runtime/xdg-config
+          export TMPDIR=$(pwd)/.sites-runtime/tmp
+          export WRANGLER_WRITE_LOGS=false
+          export WRANGLER_LOG_PATH=$(pwd)/.sites-runtime/wrangler/logs
+          export MINIFLARE_REGISTRY_PATH=$(pwd)/.sites-runtime/wrangler/registry
+          unset NPM_CONFIG_CACHE npm_config_cache || true
+          export npm_config_cache=$(pwd)/.sites-runtime/npm-cache
+          export npm_config_audit=false
+          export npm_config_fund=false
+          export npm_config_update_notifier=false
+          echo "SITES_ENV_READY=1" >> $GITHUB_ENV
+          echo "SITES_PROJECT_ROOT=$(pwd)" >> $GITHUB_ENV
+
       - name: Build
         run: pnpm build
+
+      - name: Verify build output
+        run: ls -la dist/server/ 2>/dev/null && echo "Build OK"
 
       - name: Deploy to Cloudflare
         run: npx wrangler deploy dist/server/wrangler.json
